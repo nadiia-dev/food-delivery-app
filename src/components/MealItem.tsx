@@ -1,3 +1,4 @@
+import { priceFormatter } from "../utils/priceFormatter";
 import { Meal } from "./Meals";
 
 const MealItem = ({ meal }: { meal: Meal }) => {
@@ -13,7 +14,7 @@ const MealItem = ({ meal }: { meal: Meal }) => {
         <div>
           <h3 className="text-xl font-bold my-3">{meal.name}</h3>
           <p className="inline-block bg-stone-900 text-yellow-400 text-sm font-bold py-2 px-8 rounded-md">
-            {meal.price}
+            {priceFormatter.format(parseFloat(meal.price))}
           </p>
           <p className="m-4">{meal.description}</p>
         </div>
