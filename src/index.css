@@ -27,3 +27,8 @@ h1 {
 button {
   cursor: pointer;
 }
+
+ul,
+ol {
+  list-style-type: none;
+}
