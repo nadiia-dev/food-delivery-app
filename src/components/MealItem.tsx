@@ -1,9 +1,17 @@
+import { use } from "react";
 import { priceFormatter } from "../utils/priceFormatter";
 import { Meal } from "./Meals";
 import Button from "./UI/Button";
+import CartContext, { Store } from "../store/CartContext";
 
 const MealItem = ({ meal }: { meal: Meal }) => {
   const apiUrl = import.meta.env.VITE_API_URI;
+  const cartCtx = use<Store>(CartContext);
+
+  const handleAddMeal = (meal: Meal) => {
+    cartCtx.addItem({ ...meal, quantity: 1 });
+  };
+
   return (
     <li className="bg-stone-950 rounded-md overflow-hidden text-center shadow-md">
       <article className="h-full flex flex-col justify-between">
@@ -20,7 +28,7 @@ const MealItem = ({ meal }: { meal: Meal }) => {
           <p className="m-4">{meal.description}</p>
         </div>
         <p className="mb-[1.5rem]">
-          <Button>Add to Cart</Button>
+          <Button onClick={() => handleAddMeal(meal)}>Add to Cart</Button>
         </p>
       </article>
     </li>
