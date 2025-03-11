@@ -1,5 +1,6 @@
 import { priceFormatter } from "../utils/priceFormatter";
 import { Meal } from "./Meals";
+import Button from "./UI/Button";
 
 const MealItem = ({ meal }: { meal: Meal }) => {
   const apiUrl = import.meta.env.VITE_API_URI;
@@ -19,7 +20,7 @@ const MealItem = ({ meal }: { meal: Meal }) => {
           <p className="m-4">{meal.description}</p>
         </div>
         <p className="mb-[1.5rem]">
-          <button>Add to Cart</button>
+          <Button>Add to Cart</Button>
         </p>
       </article>
     </li>
