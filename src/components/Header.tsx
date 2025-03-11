@@ -7,7 +7,7 @@ const Header = () => {
         <img
           src={logo}
           alt="A restaurant"
-          className="w-[4rem] h-[4rem] object-contain rounded-full border-2 boreder-yellow-400"
+          className="w-[4rem] h-[4rem] object-contain rounded-full border-2 border-yellow-400"
         />
         <h1>React Food</h1>
       </div>

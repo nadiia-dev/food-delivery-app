@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import MealItem from "./MealItem";
 
-interface Meal {
+export interface Meal {
   id: string;
   name: string;
   price: string;
@@ -29,9 +30,9 @@ const Meals = () => {
   }, []);
 
   return (
-    <ul className="w-[90%] max-w-[70rem] m-8 mx-auto p-4 grid grid-cols-auto-fit min-[20rem] gap-4">
+    <ul className="w-[90%] max-w-[70rem] m-8 mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {meals.map((meal) => (
-        <li key={meal.id}>{meal.name}</li>
+        <MealItem key={meal.id} meal={meal} />
       ))}
     </ul>
   );
