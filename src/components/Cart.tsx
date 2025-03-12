@@ -49,7 +49,9 @@ const Cart = () => {
         >
           Close
         </Button>
-        <Button onClick={handleGoToCheckout}>Go to Checkout</Button>
+        {cartCtx.items.length > 0 && (
+          <Button onClick={handleGoToCheckout}>Go to Checkout</Button>
+        )}
       </p>
     </Modal>
   );
