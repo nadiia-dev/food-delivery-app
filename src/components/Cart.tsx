@@ -4,6 +4,7 @@ import CartContext from "../store/CartContext";
 import { priceFormatter } from "../utils/priceFormatter";
 import Button from "./UI/Button";
 import UserProgressContext from "../store/UserProgressContext";
+import CartItem from "./CartItem";
 
 const Cart = () => {
   const cartCtx = use(CartContext);
@@ -22,9 +23,12 @@ const Cart = () => {
       <h2 className="my-4 mx-0">Your Cart</h2>
       <ul className="my-2 mx-0 p-0">
         {cartCtx.items.map((item) => (
-          <li key={item.id}>
-            {item.name} -{item.quantity}
-          </li>
+          <CartItem
+            key={item.id}
+            {...item}
+            onAdd={() => cartCtx.addItem(item)}
+            onRemove={() => cartCtx.removeItem(item.id)}
+          />
         ))}
       </ul>
       <p className="flex justify-end mx-0 my-[2rem] text-lg font-bold text-stone-600">

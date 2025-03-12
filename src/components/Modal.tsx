@@ -25,7 +25,7 @@ const Modal = ({
     <dialog
       ref={dialog}
       className={clsx(
-        "bg-stone-200 rounded-md border-none shadow-lg p-4 w-4/5 max-w-2xl animate-fade-slide-up",
+        "backdrop:bg-stone-900/90 transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute bg-stone-200 rounded-md border-none shadow-lg p-4 w-4/5 max-w-2xl animate-fade-slide-up backdrop-brightness-50 backdrop-blur-sm",
         classes
       )}
     >
