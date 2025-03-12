@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import MealItem from "./MealItem";
+import useHttp from "../hooks/useHttp";
 
 export interface Meal {
   id: string;
@@ -11,30 +12,21 @@ export interface Meal {
 
 const Meals = () => {
   const apiUrl = import.meta.env.VITE_API_URI;
-  const [meals, setMeals] = useState<Meal[]>([]);
 
-  useEffect(() => {
-    async function fetchMeals() {
-      try {
-        const res = await fetch(`${apiUrl}/meals`);
-        const loadedMeals = await res.json();
-        setMeals(loadedMeals);
-      } catch (e) {
-        if (e instanceof Error) {
-          throw new Error(e.message);
-        } else {
-          throw new Error("Unexpected error");
-        }
-      }
-    }
-    fetchMeals();
-  }, []);
+  const {
+    data: meals,
+    isLoading,
+    error,
+  } = useHttp({
+    url: `${apiUrl}/meals`,
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <ul className="w-[90%] max-w-[70rem] m-8 mx-auto p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-      {meals.map((meal) => (
-        <MealItem key={meal.id} meal={meal} />
-      ))}
+      {meals && meals.map((meal) => <MealItem key={meal.id} meal={meal} />)}
     </ul>
   );
 };
