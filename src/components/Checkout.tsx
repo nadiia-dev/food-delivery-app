@@ -12,7 +12,7 @@ const Checkout = () => {
   const apiUrl = import.meta.env.VITE_API_URI;
   const cartCtx = use(CartContext);
   const userProgressCtx = use(UserProgressContext);
-  const { data, isLoading, error, sendRequest } = useHttp({
+  const { data, error, isLoading, sendRequest, clearData } = useHttp({
     url: `${apiUrl}/orders`,
     config: {
       method: "POST",
@@ -30,13 +30,8 @@ const Checkout = () => {
     userProgressCtx.closeCheckout();
   };
 
-  const handleCreateOrder = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const form = e.target as HTMLFormElement;
-    const fd = new FormData(form);
+  const handleCreateOrder = (fd: FormData) => {
     const customerData = Object.fromEntries(fd.entries());
-    console.log(customerData);
 
     sendRequest(
       JSON.stringify({
@@ -51,6 +46,7 @@ const Checkout = () => {
   const handleClose = () => {
     userProgressCtx.closeCheckout();
     cartCtx.clearCart();
+    clearData();
   };
 
   let actions = (
@@ -94,7 +90,7 @@ const Checkout = () => {
       open={userProgressCtx.progress === "checkout"}
       onClose={handleCloseCheckout}
     >
-      <form onSubmit={handleCreateOrder}>
+      <form action={handleCreateOrder}>
         <h2 className="my-4 mx-0 font-bold text-xl">Checkout</h2>
         <p className="my-2 mx-0 p-0">
           Total Amount: {priceFormatter.format(cartTotal)}

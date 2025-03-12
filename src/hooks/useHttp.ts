@@ -3,21 +3,6 @@ import { Meal } from "../components/Meals";
 
 type ConfigType = RequestInit;
 
-// interface CustomerData {
-//   name: string;
-//   email: string;
-//   street: string;
-//   "postal-code": string;
-//   city: string;
-// }
-
-// interface RequestBody {
-//   order: {
-//     items: Meal[];
-//     customer: CustomerData;
-//   };
-// }
-
 const handleHTTPRequest = async (url: string, config?: ConfigType) => {
   const resp = await fetch(url, config);
 
@@ -33,6 +18,10 @@ const useHttp = ({ url, config }: { url: string; config?: ConfigType }) => {
   const [data, setData] = useState<Meal[]>();
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  function clearData() {
+    setData([]);
+  }
 
   const sendRequest = useCallback(
     async function sendRequest(data?: string) {
@@ -58,7 +47,7 @@ const useHttp = ({ url, config }: { url: string; config?: ConfigType }) => {
       sendRequest();
   }, [sendRequest, config]);
 
-  return { data, error, isLoading, sendRequest };
+  return { data, error, isLoading, sendRequest, clearData };
 };
 
 export default useHttp;
