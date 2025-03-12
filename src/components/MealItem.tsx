@@ -2,11 +2,11 @@ import { use } from "react";
 import { priceFormatter } from "../utils/priceFormatter";
 import { Meal } from "./Meals";
 import Button from "./UI/Button";
-import CartContext, { Store } from "../store/CartContext";
+import CartContext from "../store/CartContext";
 
 const MealItem = ({ meal }: { meal: Meal }) => {
   const apiUrl = import.meta.env.VITE_API_URI;
-  const cartCtx = use<Store>(CartContext);
+  const cartCtx = use(CartContext);
 
   const handleAddMeal = (meal: Meal) => {
     cartCtx.addItem({ ...meal, quantity: 1 });

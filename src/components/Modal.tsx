@@ -9,14 +9,16 @@ const Modal = ({
 }: {
   children: ReactNode;
   open: boolean;
-  classes: string;
+  classes?: string;
 }) => {
   const dialog = useRef<HTMLDialogElement | null>(null);
 
   useEffect(() => {
-    if (open && dialog.current) {
-      dialog.current.showModal();
+    const modal = dialog.current;
+    if (open && modal) {
+      modal.showModal();
     }
+    return () => modal!.close();
   }, [open]);
 
   return createPortal(

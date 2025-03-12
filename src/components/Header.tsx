@@ -1,13 +1,20 @@
 import { use } from "react";
 import logo from "../assets/logo.jpg";
 import Button from "./UI/Button";
-import CartContext, { Store } from "../store/CartContext";
+import CartContext from "../store/CartContext";
+import UserProgressContext from "../store/UserProgressContext";
 
 const Header = () => {
-  const cartCtx = use<Store>(CartContext);
+  const cartCtx = use(CartContext);
+  const userProgressCtx = use(UserProgressContext);
   const totalCrtItems = cartCtx.items.reduce((acc, curValue) => {
     return acc + curValue.quantity;
   }, 0);
+
+  const handleOpenCart = () => {
+    userProgressCtx.showCart();
+  };
+
   return (
     <header className="flex justify-between items-center py-[3rem] px-[10%]">
       <div className="flex items-center gap-[1rem]">
@@ -19,7 +26,9 @@ const Header = () => {
         <h1>React Food</h1>
       </div>
       <nav>
-        <Button textOnly>Cart({totalCrtItems})</Button>
+        <Button textOnly onClick={handleOpenCart}>
+          Cart({totalCrtItems})
+        </Button>
       </nav>
     </header>
   );

@@ -5,7 +5,7 @@ export interface CartItem extends Meal {
   quantity: number;
 }
 
-export interface Store {
+interface Store {
   items: CartItem[];
   addItem: (item: CartItem) => void;
   removeItem: (id: string) => void;
