@@ -5,10 +5,12 @@ import { createPortal } from "react-dom";
 const Modal = ({
   children,
   open,
+  onClose,
   classes,
 }: {
   children: ReactNode;
   open: boolean;
+  onClose: (() => void) | null;
   classes?: string;
 }) => {
   const dialog = useRef<HTMLDialogElement | null>(null);
@@ -21,6 +23,12 @@ const Modal = ({
     return () => modal!.close();
   }, [open]);
 
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
+
   return createPortal(
     <dialog
       ref={dialog}
@@ -28,6 +36,7 @@ const Modal = ({
         "backdrop:bg-stone-900/90 transform top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 absolute bg-stone-200 rounded-md border-none shadow-lg p-4 w-4/5 max-w-2xl animate-fade-slide-up backdrop-brightness-50 backdrop-blur-sm",
         classes
       )}
+      onClose={handleClose}
     >
       {children}
     </dialog>,

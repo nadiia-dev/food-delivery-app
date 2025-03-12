@@ -19,7 +19,10 @@ const Checkout = () => {
   };
 
   return (
-    <Modal open={userProgressCtx.progress === "checkout"}>
+    <Modal
+      open={userProgressCtx.progress === "checkout"}
+      onClose={handleCloseCheckout}
+    >
       <form>
         <h2>Checkout</h2>
         <p>Total Amount: {priceFormatter.format(cartTotal)}</p>
@@ -28,7 +31,7 @@ const Checkout = () => {
         <Input label="E-mail Address" type="email" id="email" />
         <Input label="Street" type="text" id="street" />
 
-        <div>
+        <div className="flex justify-start gap-4 ">
           <Input label="Postal Code" type="text" id="postal-code" />
           <Input label="City" type="text" id="city" />
         </div>

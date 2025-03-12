@@ -14,7 +14,7 @@ const Input = ({ id, label, ...props }: Props) => {
       <input
         id={id}
         name={id}
-        className="w-full max-w-[20rem] p-2 rounded-md border-1 border-gray-300"
+        className="w-full max-w-[20rem] p-2 rounded-md border-1 border-stone-300 bg-stone-50"
         required
         {...props}
       />
