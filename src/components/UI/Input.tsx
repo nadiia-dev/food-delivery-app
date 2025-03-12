@@ -1,4 +1,11 @@
-const Input = ({ id, label, ...props }: { id: string; label: string }) => {
+import { InputHTMLAttributes } from "react";
+
+interface Props extends InputHTMLAttributes<HTMLInputElement> {
+  id: string;
+  label: string;
+}
+
+const Input = ({ id, label, ...props }: Props) => {
   return (
     <div className="my-2 mx-0 flex flex-col">
       <label htmlFor={id} className="font-bold mb-2">
