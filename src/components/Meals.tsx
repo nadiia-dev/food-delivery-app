@@ -10,12 +10,13 @@ export interface Meal {
 }
 
 const Meals = () => {
+  const apiUrl = import.meta.env.VITE_API_URI;
   const [meals, setMeals] = useState<Meal[]>([]);
 
   useEffect(() => {
     async function fetchMeals() {
       try {
-        const res = await fetch("http://localhost:3000/meals");
+        const res = await fetch(`${apiUrl}/meals`);
         const loadedMeals = await res.json();
         setMeals(loadedMeals);
       } catch (e) {

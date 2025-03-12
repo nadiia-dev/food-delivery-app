@@ -16,7 +16,7 @@ const MealItem = ({ meal }: { meal: Meal }) => {
     <li className="bg-stone-950 rounded-md overflow-hidden text-center shadow-md">
       <article className="h-full flex flex-col justify-between">
         <img
-          src={`${apiUrl}${meal.image}`}
+          src={`${apiUrl}/${meal.image}`}
           alt={meal.name}
           className="w-full h-[20rem] object-cover"
         />

@@ -27,7 +27,7 @@ const Cart = () => {
       open={userProgressCtx.progress === "cart"}
       onClose={userProgressCtx.progress === "cart" ? handleCloseCart : null}
     >
-      <h2 className="my-4 mx-0">Your Cart</h2>
+      <h2 className="my-4 mx-0 text-xl font-bold">Your Cart</h2>
       <ul className="my-2 mx-0 p-0">
         {cartCtx.items.map((item) => (
           <CartItem
