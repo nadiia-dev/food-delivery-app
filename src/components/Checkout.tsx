@@ -9,11 +9,10 @@ import useHttp from "../hooks/useHttp";
 import Error from "./Error";
 
 const Checkout = () => {
-  const apiUrl = import.meta.env.VITE_API_URI;
   const cartCtx = use(CartContext);
   const userProgressCtx = use(UserProgressContext);
   const { data, error, isLoading, sendRequest, clearData } = useHttp({
-    url: `${apiUrl}/orders`,
+    url: "orders",
     config: {
       method: "POST",
       headers: {

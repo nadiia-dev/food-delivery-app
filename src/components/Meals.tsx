@@ -12,14 +12,12 @@ export interface Meal {
 }
 
 const Meals = () => {
-  const apiUrl = import.meta.env.VITE_API_URI;
-
   const {
     data: meals,
     isLoading,
     error,
   } = useHttp({
-    url: `${apiUrl}/meals`,
+    url: "meals",
   });
 
   if (isLoading) return <Loader />;

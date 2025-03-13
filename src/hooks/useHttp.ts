@@ -3,6 +3,8 @@ import { Meal } from "../components/Meals";
 
 type ConfigType = RequestInit;
 
+const firebaseUrl = import.meta.env.VITE_FIREBASE_DATABASE_URL;
+
 const handleHTTPRequest = async (url: string, config?: ConfigType) => {
   const resp = await fetch(url, config);
 
@@ -27,7 +29,11 @@ const useHttp = ({ url, config }: { url: string; config?: ConfigType }) => {
     async function sendRequest(data?: string) {
       setIsLoading(true);
       try {
-        const resData = await handleHTTPRequest(url, { ...config, body: data });
+        const fullUrl = `${firebaseUrl}/${url}.json`;
+        const resData = await handleHTTPRequest(fullUrl, {
+          ...config,
+          body: data,
+        });
         setData(resData);
         setError("");
       } catch (e) {
