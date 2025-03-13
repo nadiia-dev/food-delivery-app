@@ -8,6 +8,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { closeCheckout } from "../store/userProgressSlice";
 import { clearCart } from "../store/cartSlice";
+import { orderSchema } from "../utils/validation";
+import { useState } from "react";
+import { z } from "zod";
 
 const Checkout = () => {
   const dispatch = useDispatch();
@@ -15,6 +18,10 @@ const Checkout = () => {
     (state: RootState) => state.userProgress.progress
   );
   const items = useSelector((state: RootState) => state.cart.items);
+  const [validationError, setValidationError] = useState<
+    Record<string, string>
+  >({});
+
   const { data, error, isLoading, sendRequest, clearData } = useHttp({
     url: "orders",
     config: {
@@ -36,14 +43,29 @@ const Checkout = () => {
   const handleCreateOrder = (fd: FormData) => {
     const customerData = Object.fromEntries(fd.entries());
 
-    sendRequest(
-      JSON.stringify({
-        order: {
-          items: items,
-          customer: customerData,
-        },
-      })
-    );
+    try {
+      orderSchema.parse(customerData);
+      setValidationError({});
+
+      sendRequest(
+        JSON.stringify({
+          order: {
+            items: items,
+            customer: customerData,
+          },
+        })
+      );
+    } catch (e) {
+      if (e instanceof z.ZodError) {
+        const newErrors: Record<string, string> = {};
+        e.errors.forEach((err) => {
+          const field = err.path[0];
+          newErrors[field] = err.message;
+        });
+
+        setValidationError(newErrors);
+      }
+    }
   };
 
   const handleClose = () => {
@@ -93,13 +115,40 @@ const Checkout = () => {
           Total Amount: {priceFormatter.format(cartTotal)}
         </p>
 
-        <Input label="Full Name" type="text" id="name" />
-        <Input label="E-mail Address" type="email" id="email" />
-        <Input label="Street" type="text" id="street" />
+        <Input
+          label="Full Name"
+          type="text"
+          id="name"
+          error={validationError.name}
+        />
+
+        <Input
+          label="E-mail Address"
+          type="email"
+          id="email"
+          error={validationError.email}
+        />
+
+        <Input
+          label="Street"
+          type="text"
+          id="street"
+          error={validationError.street}
+        />
 
         <div className="flex justify-start gap-4 ">
-          <Input label="Postal Code" type="text" id="postal-code" />
-          <Input label="City" type="text" id="city" />
+          <Input
+            label="Postal Code"
+            type="text"
+            id="postalCode"
+            error={validationError.postalCode}
+          />
+          <Input
+            label="City"
+            type="text"
+            id="city"
+            error={validationError.city}
+          />
         </div>
 
         {error && <Error title="Failed to submit the order" message={error} />}
