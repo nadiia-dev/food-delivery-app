@@ -1,14 +1,14 @@
-import { use } from "react";
 import logo from "../assets/logo.jpg";
 import Button from "./UI/Button";
-import CartContext from "../store/CartContext";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { showCart } from "../store/userProgressSlice";
+import { RootState } from "../store/store";
 
 const Header = () => {
   const dispatch = useDispatch();
-  const cartCtx = use(CartContext);
-  const totalCrtItems = cartCtx.items.reduce((acc, curValue) => {
+  const items = useSelector((state: RootState) => state.cart.items);
+
+  const totalCrtItems = items.reduce((acc, curValue) => {
     return acc + curValue.quantity;
   }, 0);
 

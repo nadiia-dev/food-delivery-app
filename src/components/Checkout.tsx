@@ -1,7 +1,5 @@
-import { use } from "react";
 import { priceFormatter } from "../utils/priceFormatter";
 import Modal from "./Modal";
-import CartContext from "../store/CartContext";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
 import useHttp from "../hooks/useHttp";
@@ -9,13 +7,14 @@ import Error from "./Error";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { closeCheckout } from "../store/userProgressSlice";
+import { clearCart } from "../store/cartSlice";
 
 const Checkout = () => {
   const dispatch = useDispatch();
   const progress = useSelector(
     (state: RootState) => state.userProgress.progress
   );
-  const cartCtx = use(CartContext);
+  const items = useSelector((state: RootState) => state.cart.items);
   const { data, error, isLoading, sendRequest, clearData } = useHttp({
     url: "orders",
     config: {
@@ -26,7 +25,7 @@ const Checkout = () => {
     },
   });
 
-  const cartTotal = cartCtx.items.reduce((acc, curValue) => {
+  const cartTotal = items.reduce((acc, curValue) => {
     return acc + curValue.quantity * parseFloat(curValue.price);
   }, 0);
 
@@ -40,7 +39,7 @@ const Checkout = () => {
     sendRequest(
       JSON.stringify({
         order: {
-          items: cartCtx.items,
+          items: items,
           customer: customerData,
         },
       })
@@ -49,7 +48,7 @@ const Checkout = () => {
 
   const handleClose = () => {
     dispatch(closeCheckout());
-    cartCtx.clearCart();
+    dispatch(clearCart());
     clearData();
   };
 

@@ -1,15 +1,15 @@
-import { use } from "react";
 import { priceFormatter } from "../utils/priceFormatter";
 import { Meal } from "../types/meals";
 import Button from "./UI/Button";
-import CartContext from "../store/CartContext";
+import { addItem } from "../store/cartSlice";
+import { useDispatch } from "react-redux";
 
 const MealItem = ({ meal }: { meal: Meal }) => {
   const apiUrl = import.meta.env.VITE_API_URI;
-  const cartCtx = use(CartContext);
+  const dispatch = useDispatch();
 
   const handleAddMeal = (meal: Meal) => {
-    cartCtx.addItem({ ...meal, quantity: 1 });
+    dispatch(addItem({ ...meal, quantity: 1 }));
   };
 
   return (

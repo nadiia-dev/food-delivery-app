@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userProgressReducer from "./userProgressSlice";
+import cartReducer from "./cartSlice";
 
 const store = configureStore({
   reducer: {
     userProgress: userProgressReducer,
+    cart: cartReducer,
   },
 });
 

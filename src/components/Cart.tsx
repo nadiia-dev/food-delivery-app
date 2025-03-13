@@ -1,21 +1,20 @@
-import { use } from "react";
 import Modal from "./Modal";
-import CartContext from "../store/CartContext";
 import { priceFormatter } from "../utils/priceFormatter";
 import Button from "./UI/Button";
 import CartItem from "./CartItem";
 import { useDispatch, useSelector } from "react-redux";
 import { closeCart, showCheckout } from "../store/userProgressSlice";
 import { RootState } from "../store/store";
+import { addItem, removeItem } from "../store/cartSlice";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const progress = useSelector(
     (state: RootState) => state.userProgress.progress
   );
-  const cartCtx = use(CartContext);
+  const items = useSelector((state: RootState) => state.cart.items);
 
-  const cartTotal = cartCtx.items.reduce((acc, curValue) => {
+  const cartTotal = items.reduce((acc, curValue) => {
     return acc + curValue.quantity * parseFloat(curValue.price);
   }, 0);
 
@@ -34,12 +33,12 @@ const Cart = () => {
     >
       <h2 className="my-4 mx-0 text-xl font-bold">Your Cart</h2>
       <ul className="my-2 mx-0 p-0">
-        {cartCtx.items.map((item) => (
+        {items.map((item) => (
           <CartItem
             key={item.id}
             {...item}
-            onAdd={() => cartCtx.addItem(item)}
-            onRemove={() => cartCtx.removeItem(item.id)}
+            onAdd={() => dispatch(addItem(item))}
+            onRemove={() => dispatch(removeItem(item.id))}
           />
         ))}
       </ul>
@@ -54,7 +53,7 @@ const Cart = () => {
         >
           Close
         </Button>
-        {cartCtx.items.length > 0 && (
+        {items.length > 0 && (
           <Button onClick={handleGoToCheckout}>Go to Checkout</Button>
         )}
       </p>
