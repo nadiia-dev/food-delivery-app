@@ -2,17 +2,18 @@ import { use } from "react";
 import logo from "../assets/logo.jpg";
 import Button from "./UI/Button";
 import CartContext from "../store/CartContext";
-import UserProgressContext from "../store/UserProgressContext";
+import { useDispatch } from "react-redux";
+import { showCart } from "../store/userProgressSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const cartCtx = use(CartContext);
-  const userProgressCtx = use(UserProgressContext);
   const totalCrtItems = cartCtx.items.reduce((acc, curValue) => {
     return acc + curValue.quantity;
   }, 0);
 
   const handleOpenCart = () => {
-    userProgressCtx.showCart();
+    dispatch(showCart());
   };
 
   return (

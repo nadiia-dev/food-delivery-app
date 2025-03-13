@@ -4,13 +4,18 @@ import Modal from "./Modal";
 import CartContext from "../store/CartContext";
 import Input from "./UI/Input";
 import Button from "./UI/Button";
-import UserProgressContext from "../store/UserProgressContext";
 import useHttp from "../hooks/useHttp";
 import Error from "./Error";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../store/store";
+import { closeCheckout } from "../store/userProgressSlice";
 
 const Checkout = () => {
+  const dispatch = useDispatch();
+  const progress = useSelector(
+    (state: RootState) => state.userProgress.progress
+  );
   const cartCtx = use(CartContext);
-  const userProgressCtx = use(UserProgressContext);
   const { data, error, isLoading, sendRequest, clearData } = useHttp({
     url: "orders",
     config: {
@@ -26,7 +31,7 @@ const Checkout = () => {
   }, 0);
 
   const handleCloseCheckout = () => {
-    userProgressCtx.closeCheckout();
+    dispatch(closeCheckout());
   };
 
   const handleCreateOrder = (fd: FormData) => {
@@ -43,7 +48,7 @@ const Checkout = () => {
   };
 
   const handleClose = () => {
-    userProgressCtx.closeCheckout();
+    dispatch(closeCheckout());
     cartCtx.clearCart();
     clearData();
   };
@@ -68,10 +73,7 @@ const Checkout = () => {
 
   if (data && !error) {
     return (
-      <Modal
-        open={userProgressCtx.progress === "checkout"}
-        onClose={handleCloseCheckout}
-      >
+      <Modal open={progress === "checkout"} onClose={handleCloseCheckout}>
         <h2>Success!</h2>
         <p>Your order was successfully submitted</p>
         <p>We will get back to you with more details on email soon</p>
@@ -85,10 +87,7 @@ const Checkout = () => {
   }
 
   return (
-    <Modal
-      open={userProgressCtx.progress === "checkout"}
-      onClose={handleCloseCheckout}
-    >
+    <Modal open={progress === "checkout"} onClose={handleCloseCheckout}>
       <form action={handleCreateOrder}>
         <h2 className="my-4 mx-0 font-bold text-xl">Checkout</h2>
         <p className="my-2 mx-0 p-0">

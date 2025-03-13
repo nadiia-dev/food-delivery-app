@@ -3,29 +3,34 @@ import Modal from "./Modal";
 import CartContext from "../store/CartContext";
 import { priceFormatter } from "../utils/priceFormatter";
 import Button from "./UI/Button";
-import UserProgressContext from "../store/UserProgressContext";
 import CartItem from "./CartItem";
+import { useDispatch, useSelector } from "react-redux";
+import { closeCart, showCheckout } from "../store/userProgressSlice";
+import { RootState } from "../store/store";
 
 const Cart = () => {
+  const dispatch = useDispatch();
+  const progress = useSelector(
+    (state: RootState) => state.userProgress.progress
+  );
   const cartCtx = use(CartContext);
-  const userProgressCtx = use(UserProgressContext);
 
   const cartTotal = cartCtx.items.reduce((acc, curValue) => {
     return acc + curValue.quantity * parseFloat(curValue.price);
   }, 0);
 
   const handleCloseCart = () => {
-    userProgressCtx.closeCart();
+    dispatch(closeCart());
   };
 
   const handleGoToCheckout = () => {
-    userProgressCtx.showCheckout();
+    dispatch(showCheckout());
   };
 
   return (
     <Modal
-      open={userProgressCtx.progress === "cart"}
-      onClose={userProgressCtx.progress === "cart" ? handleCloseCart : null}
+      open={progress === "cart"}
+      onClose={progress === "cart" ? handleCloseCart : null}
     >
       <h2 className="my-4 mx-0 text-xl font-bold">Your Cart</h2>
       <ul className="my-2 mx-0 p-0">
