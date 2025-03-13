@@ -3,14 +3,6 @@ import useHttp from "../hooks/useHttp";
 import Error from "./Error";
 import Loader from "./Loader";
 
-export interface Meal {
-  id: string;
-  name: string;
-  price: string;
-  description: string;
-  image: string;
-}
-
 const Meals = () => {
   const {
     data: meals,

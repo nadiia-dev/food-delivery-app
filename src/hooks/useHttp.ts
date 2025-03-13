@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { Meal } from "../components/Meals";
+import { Meal } from "../types/meals";
 
 type ConfigType = RequestInit;
 

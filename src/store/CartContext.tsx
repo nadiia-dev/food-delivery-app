@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useReducer } from "react";
-import { Meal } from "../components/Meals";
+import { Meal } from "../types/meals";
 
-export interface CartItem extends Meal {
+interface CartItem extends Meal {
   quantity: number;
 }
 

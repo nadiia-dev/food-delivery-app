@@ -1,6 +1,6 @@
 import { use } from "react";
 import { priceFormatter } from "../utils/priceFormatter";
-import { Meal } from "./Meals";
+import { Meal } from "../types/meals";
 import Button from "./UI/Button";
 import CartContext from "../store/CartContext";
 
