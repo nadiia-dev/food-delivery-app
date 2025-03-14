@@ -1,54 +1,56 @@
-# React + TypeScript + Vite
+# Food Delivery App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A food delivery application built with React, Redux, and Firebase. The app allows users to browse a menu, add meals to their cart, and place orders. It leverages Firebase for data storage and real-time updates.
 
-Currently, two official plugins are available:
+## Technologies Used
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React**: A JavaScript library for building user interfaces.
+- **Redux**: State management library used for managing the application state.
+- **Redux Toolkit**: Simplifies Redux setup and reduces boilerplate code.
+- **TypeScript**: Superset of JavaScript that provides optional static typing, improving development productivity and reliability.
+- **Firebase**: A platform for developing web and mobile applications, used here for database storage and real-time data updates.
+- **Zod**: A TypeScript-first schema validation library for input validation.
+- **Tailwind CSS**: A utility-first CSS framework for designing custom and responsive UIs.
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Meal Catalog**: Display a list of available meals with their details and prices.
+- **Cart Management**: Users can add meals to their cart, update quantities, and remove items.
+- **Order Creation**: After selecting meals, users can place an order by providing necessary information.
+- **Input Validation**: Ensures that the user submits valid data, such as valid email addresses, through Zod validation schemas.
+- **Responsive Design**: The app is fully responsive and works seamlessly on various devices, thanks to Tailwind CSS.
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Installation
+
+To run this project locally, follow these steps:
+
+1. Clone the repository:
+
+```bash
+  git clone https://github.com/nadiia-dev/food-delivery-app.git
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Install the dependencies:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+  cd food-delivery-app
+  npm install
 ```
+
+3. Set up your Firebase project:
+
+- Create a Firebase project at Firebase Console.
+- Set up Firebase Firestore or Realtime Database (depending on your configuration).
+- Get your Firebase config and create a .env file in the root directory with content similar to the .env.example file.
+
+4. Run the development server:
+
+```bash
+    npm run dev
+```
+
+5. Open the application in your browser at http://localhost:5173.
+
+## Deployment
+
+Application deployed using Vercel
