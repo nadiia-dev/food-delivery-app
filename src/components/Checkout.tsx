@@ -18,9 +18,18 @@ const Checkout = () => {
     (state: RootState) => state.userProgress.progress
   );
   const items = useSelector((state: RootState) => state.cart.items);
+  const [inputData, setInputData] = useState<{ [key: string]: string }>({});
   const [validationError, setValidationError] = useState<
     Record<string, string>
   >({});
+
+  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setInputData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const { data, error, isLoading, sendRequest, clearData } = useHttp({
     url: "orders",
@@ -119,6 +128,8 @@ const Checkout = () => {
           label="Full Name"
           type="text"
           id="name"
+          onBlur={handleInputBlur}
+          defaultValue={inputData.name || ""}
           error={validationError.name}
         />
 
@@ -126,6 +137,8 @@ const Checkout = () => {
           label="E-mail Address"
           type="email"
           id="email"
+          onBlur={handleInputBlur}
+          defaultValue={inputData.email || ""}
           error={validationError.email}
         />
 
@@ -133,6 +146,8 @@ const Checkout = () => {
           label="Street"
           type="text"
           id="street"
+          onBlur={handleInputBlur}
+          defaultValue={inputData.street || ""}
           error={validationError.street}
         />
 
@@ -141,12 +156,16 @@ const Checkout = () => {
             label="Postal Code"
             type="text"
             id="postalCode"
+            onBlur={handleInputBlur}
+            defaultValue={inputData.postalCode || ""}
             error={validationError.postalCode}
           />
           <Input
             label="City"
             type="text"
             id="city"
+            onBlur={handleInputBlur}
+            defaultValue={inputData.city || ""}
             error={validationError.city}
           />
         </div>
