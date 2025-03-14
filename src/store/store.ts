@@ -6,7 +6,20 @@ import storage from "redux-persist/lib/storage";
 import persistReducer from "redux-persist/es/persistReducer";
 import persistStore from "redux-persist/es/persistStore";
 
-const persistConfig: PersistConfig<any> = {
+interface Items {
+  id: string;
+  name: string;
+  price: string;
+  description: string;
+  image: string;
+  quantity: number;
+}
+
+interface CartState {
+  items: Items[];
+}
+
+const persistConfig: PersistConfig<CartState> = {
   key: "cart",
   storage,
 };
